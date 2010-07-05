@@ -1,0 +1,30 @@
+num_nodes = 0;
+
+for x=1:length(polldata_1)
+   type = polldata_1(x, 1);
+   if type == 1
+       num_nodes = polldata_1(x, 2);
+       break
+   end
+end
+
+for (i=0:num_nodes-1)
+   node_rtt = []
+   node_s2dt = []
+    for x=1:length(polldata_1)
+       type = polldata_1(x, 1);
+       if type == 3
+           node_id = polldata_1(x, 2);
+           seq_id = polldata_1(x, 3);
+           rtt = polldata_1(x, 4);
+           s2dt = polldata_1(x, 5);
+           retries = polldata_1(x, 6);
+           fails = polldata_1(x, 7);
+           if node_id == i
+                node_rtt = horzcat(node_rtt, rtt);
+                node_s2dt = horzcat(node_s2dt, s2dt);
+           end
+       end
+    end
+    
+end
