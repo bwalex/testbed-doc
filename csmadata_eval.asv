@@ -15,11 +15,11 @@ function [node_rtt, node_s2dt, node_retries, node_fails, avg_rtt, avg_s2dt, node
            end
        end
        if type == 3
+           node_fails = 
            node_id = polldata_1(x, 2);
            seq_id = polldata_1(x, 3);
            s2dt = polldata_1(x, 4);
            if node_id == node
-                node_retries = node_retries+1;
                 node_s2dt = horzcat(node_s2dt, s2dt);
            end
        end
