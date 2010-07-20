@@ -1,11 +1,10 @@
-%[node_rtt, node_s2dt, node_retries, node_fails, avg_rtt, avg_s2dt, node_oobs, node_timeouts] = polldata_eval(2, polldata_1)
-function [node_rtt, node_s2dt, node_retries, node_fails, avg_rtt, avg_s2dt, node_oobs, node_timeouts] = csmadata_eval(node, polldata_1)
-   node_rtt = [];
+%[node_s2dt, avg_s2dt, node_oobs, seq_id, node_recvdata] = polldata_eval(2, polldata_1)
+function [node_s2dt, avg_s2dt, node_oobs, seq_id, node_recvdata] = csmadata_eval(node, polldata_1)
    node_s2dt = [];
-   node_retries = 0;
-   node_fails = 0;
+   node_recvdata = 0;
    node_oobs = 0;
-   node_timeouts = 0;
+   seq_id = 0;
+   
     for x=1:length(polldata_1)
        type = polldata_1(x, 1);
        if type == 2
@@ -16,14 +15,13 @@ function [node_rtt, node_s2dt, node_retries, node_fails, avg_rtt, avg_s2dt, node
        end
        if type == 3
            node_id = polldata_1(x, 2);
-           seq_id = polldata_1(x, 3);
            s2dt = polldata_1(x, 4);
            if node_id == node
-                node_retries = node_retries+1;
+                seq_id = polldata_1(x, 3);
+                node_recvdata = node_recvdata+1;
                 node_s2dt = horzcat(node_s2dt, s2dt);
            end
        end
     end
-    avg_rtt = mean(node_rtt);
     avg_s2dt = mean(node_s2dt);
 end
